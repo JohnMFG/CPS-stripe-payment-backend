@@ -1,11 +1,13 @@
 const express = require("express");
+const cors = require("cors");
 const app = express();
-// This is your test secret API key.
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-
+app.use(cors());
 app.use(express.static("public"));
 app.use(express.json());
+
+// This is test secret API key from the Render environment variable
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const calculateOrderAmount = (items) => {
   // constant with a calculation of the order's amount
@@ -16,9 +18,8 @@ const calculateOrderAmount = (items) => {
 };
 
 app.post("/create-payment-intent", async (req, res) => {
-  const { items } = req.body;
-  const {currency} = req.body;
-  // Create a PaymentIntent with the order amount and currency
+  const { items, currency } = req.body;
+// Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
     amount: calculateOrderAmount(items),
     currency: currency,
@@ -30,10 +31,6 @@ app.post("/create-payment-intent", async (req, res) => {
   res.send({
     clientSecret: paymentIntent.client_secret,
   });
-});
-
-app.get("/greet", async (req, res) => {
-  res.send('helllo');
 });
 
 const PORT = process.env.PORT || 4242;

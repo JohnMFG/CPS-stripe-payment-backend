@@ -1,7 +1,7 @@
 {
   "name": "stripe-payment",
   "version": "1.0.0",
-  "description": "",
+  "description": "Stripe Payment Integration for Node.js",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.3",
-    "stripe": "^8.215.0"
+    "stripe": "^8.215.0",
+    "cors": "^2.8.5"
   }
 }
