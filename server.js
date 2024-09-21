@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
 // This is your test secret API key.
-const stripe = require("stripe")('sk_test_51Kl89YCUfB9y1XearGSRNC4MepeompGSuobs1xShvVClebM7OcEgIB8WTe1qDZNr7Dp5mLQwSVeX9pmgkyNOrWW200GIub0Am9');
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
 
 app.use(express.static("public"));
 app.use(express.json());
@@ -35,4 +36,5 @@ app.get("/greet", async (req, res) => {
   res.send('helllo');
 });
 
-app.listen(4242, () => console.log("Node server listening on port 4242!"));
+const PORT = process.env.PORT || 4242;
+app.listen(PORT, () => console.log(`Node server listening on port ${PORT}!`));
